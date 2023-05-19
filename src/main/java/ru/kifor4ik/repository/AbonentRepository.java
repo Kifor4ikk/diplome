@@ -10,7 +10,8 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
 
     public AbonentRepository() throws SQLException {
     }
-
+    private AccountRepository accountRepository = new AccountRepository();
+    private CardRepository cardRepository = new CardRepository();
     @Override
     public AbonentEntity create(AbonentEntity item) throws SQLException {
         AbonentEntity abonentEntity = null;
@@ -34,7 +35,7 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
     }
 
     @Override
-    public AbonentEntity get(int id) {
+    public AbonentEntity get(int id) throws SQLException {
         AbonentEntity abonentEntity = null;
 
         try (ResultSet rs = state().executeQuery("SELECT * FROM abonent WHERE id = " + id + ";")) {
@@ -52,6 +53,8 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                         rs.getString("note")
                 );
 
+            abonentEntity.setAccounts(accountRepository.getByAbonentId(abonentEntity.getId()));
+            abonentEntity.setCards(cardRepository.getByAbonentId(abonentEntity.getId()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,8 +63,10 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
         return abonentEntity;
     }
 
-    public AbonentEntity getByLogPass(String login, String pass) {
+    public AbonentEntity getByLogPass(String login, String pass) throws SQLException {
         AbonentEntity abonentEntity = null;
+
+
 
         try (ResultSet rs = state().executeQuery("SELECT * FROM abonent WHERE login = '" + login + "' AND password = '" + pass + "';")) {
             //Info about abonent
@@ -76,7 +81,8 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                     rs.getString("phonenumber"),
                     rs.getString("note")
             );
-
+            abonentEntity.setAccounts(accountRepository.getByAbonentId(abonentEntity.getId()));
+            abonentEntity.setCards(cardRepository.getByAbonentId(abonentEntity.getId()));
         } catch (Exception e) {
             e.printStackTrace();
         }

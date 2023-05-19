@@ -8,10 +8,12 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class CardEntity {
     private int id;
-    private int account_id;
+    private int accountId;
     private Date expired_date;
-    private long cvv;
-
+    private int cvv;
+    private String cardNumber;
+    private String cardPassword;
 }

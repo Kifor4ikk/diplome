@@ -8,10 +8,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class AccountEntity {
     private int id;
-    private int user_id;
+    private int abonentId;
     private BigDecimal value;
-    private String currency_code;
+    private String currencyCode;
 
 }
