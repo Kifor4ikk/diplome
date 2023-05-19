@@ -26,6 +26,8 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
             e.printStackTrace();
         }
 
+
+
         return accountEntity;
     }
 
@@ -38,9 +40,9 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
             if (rs.next())
                 accountEntity = new AccountEntity(
                         rs.getInt("id"),
-                        rs.getInt("abonentid"),
+                        rs.getInt("abonent_id"),
                         rs.getBigDecimal("value"),
-                        rs.getString("currencyCode")
+                        rs.getString("currency_code")
                 );
 
         } catch (SQLException e) {

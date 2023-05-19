@@ -11,6 +11,11 @@ public class Main {
 
         AbonentRepository abonentRepository = new AbonentRepository();
 
-        System.out.println(abonentRepository.get(1));
+        AbonentEntity abonentEntity = abonentRepository.get(1);
+
+        abonentEntity.setFirstName("Petuch");
+
+        abonentRepository.update(abonentEntity);
+
     }
 }
