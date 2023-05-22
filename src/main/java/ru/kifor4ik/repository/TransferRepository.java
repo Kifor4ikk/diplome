@@ -1,9 +1,10 @@
 package ru.kifor4ik.repository;
 
+import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.TransferEntity;
 
 import java.sql.SQLException;
-
+@Component
 public class TransferRepository extends BaseRepository implements CrudRepository<TransferEntity> {
     public TransferRepository() throws SQLException {
     }

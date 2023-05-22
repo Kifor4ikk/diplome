@@ -1,5 +1,7 @@
 package ru.kifor4ik.repository;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.domain.ExchangeRateToBynEntity;
 
@@ -7,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@Component
 public class AbonentRepository extends BaseRepository implements CrudRepository<AbonentEntity> {
 
     public AbonentRepository() throws SQLException {
@@ -112,13 +115,10 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
             query.append("phonenumber = '").append(item.getPhoneNumber()).append("',");
         if (!Objects.equals(abonentEntity.getAge(), item.getAge()))
             query.append("age = '").append(item.getAge()).append("',");
-
         if (query.charAt(query.length() - 1) == ',')
             query.setCharAt(query.length() - 1, ' ');
 
-
         query.append("WHERE ID = ").append(item.getId()).append(";");
-
         state().executeUpdate(String.valueOf(query));
         return null;
     }

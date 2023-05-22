@@ -1,11 +1,13 @@
 package ru.kifor4ik.repository;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.ExchangeRateToBynEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class ExchangeRateRepository extends BaseRepository implements CrudRepository<ExchangeRateToBynEntity> {
     public ExchangeRateRepository() throws SQLException {
     }

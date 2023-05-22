@@ -1,5 +1,6 @@
 package ru.kifor4ik.repository;
 
+import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.AccountEntity;
 
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AccountRepository extends BaseRepository implements CrudRepository<AccountEntity> {
 
 

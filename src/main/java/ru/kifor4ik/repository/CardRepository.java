@@ -1,6 +1,7 @@
 package ru.kifor4ik.repository;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.AccountEntity;
 import ru.kifor4ik.domain.CardEntity;
 
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CardRepository extends BaseRepository implements CrudRepository<CardEntity> {
 
     public CardRepository() throws SQLException {
