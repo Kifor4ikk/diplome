@@ -1,0 +1,93 @@
+
+CREATE TABLE IF NOT EXISTS Abonent(
+	id BIGSERIAL,
+	firstName varchar(30) CHECK (LENGTH(firstName) > 2),
+	secondName varchar(30) CHECK (LENGTH(secondName) > 2),
+	thirdName varchar (30) ,
+	age smallInt CHECK (age > 1) NOT NULL,
+	phoneNumber varchar(20) CHECK (LENGTH(phoneNumber) > 6) UNIQUE,
+	note varchar(1000),
+	login varchar(30) CHECK (LENGTH(login) > 6) UNIQUE,
+	password varchar(30) CHECK (LENGTH(password) > 6),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS ExchangeToByn(
+	code varchar CHECK (LENGTH(code) = 3) UNIQUE,
+	amount decimal CHECK (amount > 0 AND NOT NULL),
+	PRIMARY KEY (code)
+);
+
+CREATE TABLE IF NOT EXISTS Account(
+	id BIGSERIAL,
+	abonent_id BIGINT,
+	value decimal DEFAULT 0,
+	currency_code varchar,
+	PRIMARY KEY (id),
+	FOREIGN KEY (currency_code) REFERENCES ExchangeToByn(code),
+	FOREIGN KEY (abonent_id) REFERENCES Abonent(id)
+);
+
+CREATE TABLE IF NOT EXISTS Card(
+	id BIGSERIAL,
+	account_id BIGSERIAL,
+	expire_date date NOT NULL,
+	cvv smallInt CHECK(cvv > 99 AND cvv < 1000 AND NOT NULL),
+	card_number varchar(16) CHECK (LENGTH(card_Number) = 16 AND NOT NULL) UNIQUE,
+	card_password smallInt CHECK(card_password > 999 AND card_password < 10000 AND NOT NULL),
+	PRIMARY KEY (id),
+	FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
+
+INSERT INTO exchangetobyn (code,amount) VALUES ('TTT', 3);
+INSERT INTO exchangetobyn (code,amount) VALUES ('AAA', 4);
+INSERT INTO exchangetobyn (code,amount) VALUES ('BBB', 5);
+INSERT INTO exchangetobyn (code,amount) VALUES ('WWW', 6);
+INSERT INTO exchangetobyn (code,amount) VALUES ('ZZZ', 0.5);
+INSERT INTO exchangetobyn (code,amount) VALUES ('PPP', 1);
+
+
+INSERT INTO abonent (login,"password",firstname,secondname,thirdname,age,phonenumber,note)
+VALUES ('Loginezavr','password', 'Alexey', 'Alexeyev', 'Alexeevich',22,'375296665511','Very good boy');
+INSERT INTO abonent (login,"password",firstname,secondname,thirdname,age,phonenumber,note)
+VALUES ('Adminadmin','passcool', 'Misha', 'Jojyevich', 'Mihailov',18,'375335551155','Note');
+INSERT INTO abonent (login,"password",firstname,secondname,thirdname,age,phonenumber,note)
+VALUES ('Hooooooney','UFOUFOUFO', 'UFO', 'MUller', 'Coller',111,'88005553535','Is it real Alien?');
+INSERT INTO abonent (login,"password",firstname,secondname,thirdname,age,phonenumber,note)
+VALUES ('CoolestHacker','HackerPokerNever', 'Grigory', 'Shlyapik', 'Kirgioz', 32,'1111111111','Trying to hack ur system');
+
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (1,'TTT',0);
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (1,'BBB',10);
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (2,'AAA',0);
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (3,'AAA',150);
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (3,'PPP',0);
+
+
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (4,'WWW',15);
+INSERT INTO account (abonent_id,currency_code,"value")
+VALUES (4,'ZZZ',1000);
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (1, '5555199945553444',1234,222,('2023-11-11'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (2, '3333444455556666',4321,333,('2023-12-11'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (3, '1234123412341234',5555,665,('2024-01-01'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (4, '5554446667778888',4556,123,('2026-01-12'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (5, '9999888844445555',1441,898,('2024-10-30'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (6, '1111333344457777',2456,161,('2025-05-12'));
+INSERT INTO card (account_id,card_number,card_password,cvv,expire_date)
+VALUES (7, '5555199945554444',1111,555,('2022-08-16'));
+
+
+
+
