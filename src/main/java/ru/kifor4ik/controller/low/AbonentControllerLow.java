@@ -2,10 +2,7 @@ package ru.kifor4ik.controller.low;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.service.low.AbonentServiceLow;
 
@@ -20,5 +17,10 @@ public class AbonentControllerLow {
     @PostMapping("/")
     public AbonentEntity create(AbonentEntity abonentEntity) throws SQLException {
         return abonentService.create(abonentEntity);
+    }
+
+    @GetMapping("/{id}")
+    public AbonentEntity get(@PathVariable(value = "id") int id) throws SQLException {
+        return abonentService.getById(id);
     }
 }
