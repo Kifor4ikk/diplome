@@ -16,11 +16,22 @@ public class AbonentControllerLow {
 
     @PostMapping("/")
     public AbonentEntity create(AbonentEntity abonentEntity) throws SQLException {
-        return abonentService.create(abonentEntity);
+        return (AbonentEntity) abonentService.create(abonentEntity);
     }
 
     @GetMapping("/{id}")
     public AbonentEntity get(@PathVariable(value = "id") int id) throws SQLException {
-        return abonentService.getById(id);
+        return (AbonentEntity) abonentService.getById(id);
     }
+
+    @PutMapping("/")
+    public AbonentEntity update(AbonentEntity abonentEntity) throws SQLException {
+        return (AbonentEntity) abonentService.update(abonentEntity);
+    }
+
+    @DeleteMapping("/")
+    public AbonentEntity delete(@RequestParam int id) throws SQLException {
+        return (AbonentEntity) abonentService.delete(id);
+    }
+
 }

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @ToString
-public class AccountEntity {
+public class AccountEntity implements BaseEntity{
     private int id;
     private int abonentId;
     private BigDecimal value;

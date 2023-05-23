@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TransferEntity {
+public class TransferEntity  implements BaseEntity{
     private int id;
     private int sender_account_id;
     private int receiver_account_id;

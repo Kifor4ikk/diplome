@@ -1,11 +1,14 @@
 package ru.kifor4ik.service;
 
+import ru.kifor4ik.domain.BaseEntity;
+import ru.kifor4ik.repository.CrudRepository;
+
 import java.sql.SQLException;
 
-public interface BaseService<T> {
+public interface BaseService<T extends CrudRepository<E>, E extends BaseEntity> {
 
-    public T create(T item) throws SQLException;
-    public T getById(int id) throws SQLException;
-    public T update(T item) throws SQLException;
-    public T delete(int id) throws SQLException;
+    public E create(E item) throws SQLException;
+    public E getById(int id) throws SQLException;
+    public E update(E item) throws SQLException;
+    public E delete(int id) throws SQLException;
 }

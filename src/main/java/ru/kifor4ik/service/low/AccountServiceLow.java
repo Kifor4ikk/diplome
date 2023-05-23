@@ -7,33 +7,17 @@ import ru.kifor4ik.service.BaseService;
 
 import java.sql.SQLException;
 
-public class AccountServiceLow implements BaseService<AccountEntity> {
+public class AccountServiceLow extends AbstractLowService<AccountRepository, AccountEntity> {
 
 
     private AccountRepository accountRepository;
 
     @Autowired
     public AccountServiceLow(AccountRepository accountRepository) {
+        super(accountRepository);
         this.accountRepository = accountRepository;
     }
 
-    @Override
-    public AccountEntity create(AccountEntity item) throws SQLException {
-        return accountRepository.create(item);
-    }
 
-    @Override
-    public AccountEntity getById(int id) {
-        return accountRepository.get(id);
-    }
 
-    @Override
-    public AccountEntity update(AccountEntity item) {
-        return accountRepository.update(item);
-    }
-
-    @Override
-    public AccountEntity delete(int id) {
-        return accountRepository.delete(id);
-    }
 }

@@ -9,11 +9,11 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class CardEntity {
+public class CardEntity  implements BaseEntity{
     private int id;
     private int accountId;
     private Date expired_date;
     private int cvv;
     private String cardNumber;
-    private String cardPassword;
+    private int cardPassword;
 }

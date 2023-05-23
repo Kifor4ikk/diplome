@@ -39,6 +39,18 @@ CREATE TABLE IF NOT EXISTS Card(
 	FOREIGN KEY (account_id) REFERENCES Account(id)
 );
 
+CREATE TABLE IF NOT EXISTS Transfer(
+
+	ID BIGSERIAL,
+	sender BIGINT,
+	receiver BIGINT,
+	sender_currency_code VARCHAR(3),
+	receiver_currency_code VARCHAR(3),
+	amount DECIMAL,
+	PRIMARY KEY(ID),
+	FOREIGN KEY (SENDER) REFERENCES Account(id),
+	FOREIGN KEY (RECEIVER) REFERENCES Account(id)
+);
 
 INSERT INTO exchangetobyn (code,amount) VALUES ('TTT', 3);
 INSERT INTO exchangetobyn (code,amount) VALUES ('AAA', 4);

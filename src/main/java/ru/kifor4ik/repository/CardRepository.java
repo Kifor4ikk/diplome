@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class CardRepository extends BaseRepository implements CrudRepository<CardEntity> {
@@ -34,7 +35,7 @@ public class CardRepository extends BaseRepository implements CrudRepository<Car
                         rs.getDate("expire_date"),
                         rs.getInt("CVV"),
                         rs.getString("card_number"),
-                        rs.getString("card_password")
+                        rs.getInt("card_password")
                 );
 
         } catch (SQLException e) {
@@ -59,7 +60,7 @@ public class CardRepository extends BaseRepository implements CrudRepository<Car
                                 rs.getDate("expire_date"),
                                 rs.getInt("CVV"),
                                 rs.getString("card_number"),
-                                rs.getString("card_password")
+                                rs.getInt("card_password")
                         )
                 );
         } catch (SQLException e) {
@@ -69,12 +70,21 @@ public class CardRepository extends BaseRepository implements CrudRepository<Car
     }
 
     @Override
-    public CardEntity update(CardEntity item) {
-        return null;
+    public CardEntity update(CardEntity item) throws SQLException {
+
+        StringBuilder query = new StringBuilder("UPDATE card SET ");
+
+        CardEntity cardEntity = this.get(item.getId());
+
+        if (!Objects.equals(cardEntity.getCardPassword(), cardEntity.getCardPassword()))
+            query.append("cardpassword = '").append(item.getCardPassword()).append("',");
+
+        return cardEntity;
     }
 
     @Override
-    public CardEntity delete(int id) {
+    public CardEntity delete(int id) throws SQLException {
+        state().execute("DETELE FROM Card where ID = " + id + ";");
         return null;
     }
 }

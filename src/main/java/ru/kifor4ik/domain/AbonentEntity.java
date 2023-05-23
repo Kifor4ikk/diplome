@@ -1,6 +1,7 @@
 package ru.kifor4ik.domain;
 
 import lombok.*;
+import ru.kifor4ik.service.BaseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class AbonentEntity {
+public class AbonentEntity implements BaseEntity {
     private int id;
     private String login;
     private String password;
@@ -35,4 +36,6 @@ public class AbonentEntity {
         this.phoneNumber = phonenumber;
         this.note = note;
     }
+
+
 }

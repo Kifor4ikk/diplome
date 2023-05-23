@@ -20,10 +20,19 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
 
     @Override
     public AbonentEntity create(AbonentEntity item) throws SQLException {
+
+        System.out.println("->" + item.toString());
         AbonentEntity abonentEntity = null;
-        try (ResultSet rs = state().executeQuery("INSERT INTO abonent (login,\"password\",firstname,secondname,thirdname,age,phonenumber,note)\n" +
-                "VALUES (' " +
-                "', '" + item.getLogin() +
+        try (ResultSet rs = state().executeQuery("INSERT INTO abonent (" +
+                "login," +
+                "\"password\"," +
+                "firstname," +
+                "secondname," +
+                "thirdname," +
+                "age," +
+                "phonenumber," +
+                "note)\n" +
+                "VALUES ('  " + item.getLogin() +
                 "', '" + item.getPassword() +
                 "', '" + item.getFirstName() +
                 "', '" + item.getSecondName() +
@@ -33,7 +42,8 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                 "', '" + item.getNote() + "')" +
                 "RETURNING ID;")
         ) {
-            abonentEntity = this.get(rs.getInt("id"));
+            if(rs.next())
+                abonentEntity = this.get(rs.getInt("id"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +130,7 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
 
         query.append("WHERE ID = ").append(item.getId()).append(";");
         state().executeUpdate(String.valueOf(query));
-        return null;
+        return abonentEntity;
     }
 
     @Override
