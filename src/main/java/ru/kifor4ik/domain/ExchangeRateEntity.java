@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExchangeRateToBynEntity implements BaseEntity {
+public class ExchangeRateEntity implements BaseEntity {
 
     private String code;
     private BigDecimal amount;

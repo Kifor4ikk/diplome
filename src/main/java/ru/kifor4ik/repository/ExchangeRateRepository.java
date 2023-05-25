@@ -1,36 +1,34 @@
 package ru.kifor4ik.repository;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.stereotype.Component;
-import ru.kifor4ik.domain.CardEntity;
-import ru.kifor4ik.domain.ExchangeRateToBynEntity;
+import ru.kifor4ik.domain.ExchangeRateEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
 @Component
-public class ExchangeRateRepository extends BaseRepository implements CrudRepository<ExchangeRateToBynEntity> {
+public class ExchangeRateRepository extends BaseRepository implements CrudRepository<ExchangeRateEntity> {
     public ExchangeRateRepository() throws SQLException {
     }
 
     @Override
-    public ExchangeRateToBynEntity create(ExchangeRateToBynEntity item) throws SQLException {
+    public ExchangeRateEntity create(ExchangeRateEntity item) throws SQLException {
         return null;
     }
 
     @Override
     @Deprecated
-    public ExchangeRateToBynEntity get(int id) throws SQLException {
+    public ExchangeRateEntity get(int id) throws SQLException {
         return null;
     }
 
-    public ExchangeRateToBynEntity get(String code) throws SQLException {
-            ExchangeRateToBynEntity exchangeRateToByn = null;
+    public ExchangeRateEntity get(String code) throws SQLException {
+            ExchangeRateEntity exchangeRateToByn = null;
         try(ResultSet rs = state().executeQuery("SELECT * FROM exchangetobyn WHERE code = '" + code + "';")){
 
             if(rs.next())
-                exchangeRateToByn = new ExchangeRateToBynEntity(
+                exchangeRateToByn = new ExchangeRateEntity(
                         rs.getString("code"),
                         rs.getBigDecimal("amount")
                 );
@@ -40,12 +38,12 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
         return exchangeRateToByn;
     }
 
-    public ExchangeRateToBynEntity getByCode(String code) throws SQLException {
-        ExchangeRateToBynEntity exchangeRateToByn = null;
+    public ExchangeRateEntity getByCode(String code) throws SQLException {
+        ExchangeRateEntity exchangeRateToByn = null;
         try(ResultSet rs = state().executeQuery("SELECT * FROM exchangetobyn WHERE code = '" + code + "';")){
 
             if(rs.next())
-                exchangeRateToByn = new ExchangeRateToBynEntity(
+                exchangeRateToByn = new ExchangeRateEntity(
                         rs.getString("code"),
                         rs.getBigDecimal("amount")
                 );
@@ -57,10 +55,10 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
 
 
     @Override
-    public ExchangeRateToBynEntity update(ExchangeRateToBynEntity item) throws SQLException {
+    public ExchangeRateEntity update(ExchangeRateEntity item) throws SQLException {
         StringBuilder query = new StringBuilder("UPDATE exchangetobyn SET ");
 
-        ExchangeRateToBynEntity exchane = this.get(item.getCode());
+        ExchangeRateEntity exchane = this.get(item.getCode());
 
         if (!Objects.equals(item.getAmount(), exchane.getAmount()))
             query.append("amount = '").append(item.getAmount()).append("',");
@@ -70,11 +68,11 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
 
     @Override
     @Deprecated
-    public ExchangeRateToBynEntity delete(int id) throws SQLException {
+    public ExchangeRateEntity delete(int id) throws SQLException {
         return null;
     }
 
-    public ExchangeRateToBynEntity delete(String code) throws SQLException {
+    public ExchangeRateEntity delete(String code) throws SQLException {
         state().execute("DELETE FROM exchange WHERE code = '" + code + "';" );
         return null;
     }

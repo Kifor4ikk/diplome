@@ -2,22 +2,20 @@ package ru.kifor4ik.controller.low;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.domain.AccountEntity;
-import ru.kifor4ik.service.low.AbonentServiceLow;
 import ru.kifor4ik.service.low.AccountServiceLow;
 
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/account/")
-public class AccountControllerLow {
+@RequestMapping("/api/low/account/")
+public class AccountController {
 
     @Autowired
     private AccountServiceLow accountService;
 
     @PostMapping("/")
-    public AccountEntity create(AccountEntity item) throws SQLException {
+    public AccountEntity create(@RequestBody AccountEntity item) throws SQLException {
         return accountService.create(item);
     }
 
@@ -27,7 +25,7 @@ public class AccountControllerLow {
     }
 
     @PutMapping("/")
-    public AccountEntity update(AccountEntity item) throws SQLException {
+    public AccountEntity update(@RequestBody AccountEntity item) throws SQLException {
         return accountService.update(item);
     }
 

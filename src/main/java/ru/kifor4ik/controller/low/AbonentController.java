@@ -6,16 +6,17 @@ import org.springframework.web.bind.annotation.*;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.service.low.AbonentServiceLow;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/abonent/")
-public class AbonentControllerLow {
+@RequestMapping("/api/low/abonent/")
+public class AbonentController {
     @Autowired
     private AbonentServiceLow abonentService;
 
     @PostMapping("/")
-    public AbonentEntity create(AbonentEntity abonentEntity) throws SQLException {
+    public AbonentEntity create(@RequestBody AbonentEntity abonentEntity) throws SQLException {
         return (AbonentEntity) abonentService.create(abonentEntity);
     }
 
@@ -25,7 +26,7 @@ public class AbonentControllerLow {
     }
 
     @PutMapping("/")
-    public AbonentEntity update(AbonentEntity abonentEntity) throws SQLException {
+    public AbonentEntity update(@RequestBody AbonentEntity abonentEntity) throws SQLException {
         return (AbonentEntity) abonentService.update(abonentEntity);
     }
 
@@ -34,4 +35,9 @@ public class AbonentControllerLow {
         return (AbonentEntity) abonentService.delete(id);
     }
 
+    @GetMapping("/transfer")
+    public boolean transferMoney(@RequestParam String cardNumberSender, @RequestParam int cardPassword,
+                                 @RequestParam String cardNumberReceiver, @RequestParam BigDecimal amount) throws Exception {
+        return abonentService.transferMoney(cardNumberSender, cardPassword, cardNumberReceiver,amount);
+    }
 }

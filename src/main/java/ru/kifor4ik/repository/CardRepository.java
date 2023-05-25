@@ -87,4 +87,48 @@ public class CardRepository extends BaseRepository implements CrudRepository<Car
         state().execute("DETELE FROM Card where ID = " + id + ";");
         return null;
     }
+
+
+    public CardEntity getByNumberAndPass(String number, int password) throws SQLException {
+        CardEntity cardEntity = null;
+
+        try (ResultSet rs = state().executeQuery("SELECT * FROM card WHERE  card_number = '" + number + "' AND card_password = '" + password + "';")) {
+
+            if (rs.next())
+                cardEntity = new CardEntity(
+                        rs.getInt("id"),
+                        rs.getInt("account_id"),
+                        rs.getDate("expire_date"),
+                        rs.getInt("CVV"),
+                        rs.getString("card_number"),
+                        rs.getInt("card_password")
+                );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cardEntity;
+    }
+
+
+    public CardEntity getByNumber(String number) throws SQLException {
+        CardEntity cardEntity = null;
+
+        try (ResultSet rs = state().executeQuery("SELECT * FROM card WHERE card_number = '" + number + "';")) {
+
+            if (rs.next())
+                cardEntity = new CardEntity(
+                        rs.getInt("id"),
+                        rs.getInt("account_id"),
+                        rs.getDate("expire_date"),
+                        rs.getInt("CVV"),
+                        rs.getString("card_number"),
+                        rs.getInt("card_password")
+                );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cardEntity;
+    }
 }

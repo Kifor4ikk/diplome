@@ -17,8 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.sql.SQLException;
 
 @SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan("ru/kifor4ik/*")
 @EntityScan
 @EnableWebMvc
 @EnableSwagger2

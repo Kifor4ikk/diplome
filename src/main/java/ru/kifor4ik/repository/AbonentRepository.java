@@ -1,10 +1,10 @@
 package ru.kifor4ik.repository;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.kifor4ik.domain.AbonentEntity;
-import ru.kifor4ik.domain.ExchangeRateToBynEntity;
+import ru.kifor4ik.domain.AccountEntity;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -138,4 +138,6 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
         state().execute("DELETE FROM abonent WHERE id = " + id + ";");
         return null;
     }
+
+
 }

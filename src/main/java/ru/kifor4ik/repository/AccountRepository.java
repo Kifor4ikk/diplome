@@ -1,9 +1,12 @@
 package ru.kifor4ik.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.domain.AccountEntity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.Objects;
 public class AccountRepository extends BaseRepository implements CrudRepository<AccountEntity> {
 
 
+    @Autowired
+    private ExchangeRateRepository exchangeRate;
     public AccountRepository() throws SQLException {
     }
 
@@ -92,11 +97,14 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
         if (!Objects.equals(accountEntity.getAbonentId(), item.getAbonentId()))
             query.append("abonentid = '").append(item.getAbonentId()).append("',");
 
+        query.append("value = '").append(item.getValue()).append("',");
 
         if (query.charAt(query.length() - 1) == ',')
             query.setCharAt(query.length() - 1, ' ');
 
         query.append("WHERE ID = ").append(item.getId()).append(";");
+
+        System.out.println(query);
         state().executeUpdate(String.valueOf(query));
 
         return accountEntity;
@@ -107,4 +115,29 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
         state().execute("DELETE FROM abonent WHERE id = " + id + ";");
         return null;
     }
+
+    public boolean transferMoney(int accountIdSender, int accountIdReceiver, BigDecimal count) throws Exception {
+
+        AccountEntity sender = get(accountIdSender);
+        AccountEntity receiver = get(accountIdReceiver);
+
+        if(sender.getValue().compareTo(count) < 0)
+            throw new Exception("Not enough money");
+
+        else {
+
+
+            BigDecimal bynSender = exchangeRate.get(sender.getCurrencyCode()).getAmount().multiply(count);
+
+            BigDecimal bynReceiver = bynSender.divide(exchangeRate.get(receiver.getCurrencyCode()).getAmount(), RoundingMode.DOWN);
+
+
+            sender.setValue(sender.getValue().subtract(count));
+            receiver.setValue(receiver.getValue().add(bynReceiver));
+            update(sender);
+            update(receiver);
+        }
+        return true;
+    }
+
 }
