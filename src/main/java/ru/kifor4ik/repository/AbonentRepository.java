@@ -5,6 +5,7 @@ import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.domain.AccountEntity;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -125,12 +126,16 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
             query.append("password = '").append(item.getPassword()).append("',");
         if (!item.getPhoneNumber().isBlank() && !Objects.equals(abonentEntity.getPhoneNumber(), item.getPhoneNumber()))
             query.append("phonenumber = '").append(item.getPhoneNumber()).append("',");
+        if (!item.getNote().isBlank() && !Objects.equals(abonentEntity.getNote(), item.getNote()))
+            query.append("note = '").append(item.getNote()).append("',");
         if (!Objects.equals(abonentEntity.getAge(), item.getAge()))
             query.append("age = '").append(item.getAge()).append("',");
         if (query.charAt(query.length() - 1) == ',')
             query.setCharAt(query.length() - 1, ' ');
 
         query.append("WHERE ID = ").append(item.getId()).append(";");
+
+        System.out.println(query);
         state().executeUpdate(String.valueOf(query));
         return abonentEntity;
     }
@@ -140,6 +145,5 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
         state().execute("DELETE FROM abonent WHERE id = " + id + ";");
         return null;
     }
-
 
 }

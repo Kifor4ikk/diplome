@@ -25,7 +25,7 @@ public class AbstractMediumService<T extends CrudRepository<E>, E extends BaseEn
                         query.toUpperCase().contains("SET") ||
                         query.toUpperCase().contains("UPDATE") ||
                         query.toUpperCase().contains("COLUMN") ||
-                        query.toUpperCase().contains("CREATE") ||
+                        query.toUpperCase().contains("CREATEE") ||
                         query.toUpperCase().contains("DATABASE")
 
         ) throw new Exception("Field contain bad word!");

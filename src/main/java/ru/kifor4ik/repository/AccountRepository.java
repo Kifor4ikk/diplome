@@ -130,8 +130,8 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
 
         else {
 
-            BigDecimal bynSender = exchangeRate.get(sender.getCurrencyCode()).getAmount().multiply(amount);
-            BigDecimal bynReceiver = bynSender.divide(exchangeRate.get(receiver.getCurrencyCode()).getAmount(), RoundingMode.DOWN);
+            BigDecimal bynSender = exchangeRate.getByCode(sender.getCurrencyCode()).getAmount().multiply(amount);
+            BigDecimal bynReceiver = bynSender.divide(exchangeRate.getByCode(receiver.getCurrencyCode()).getAmount(), RoundingMode.DOWN);
 
             sender.setValue(sender.getValue().subtract(amount));
             receiver.setValue(receiver.getValue().add(bynReceiver));

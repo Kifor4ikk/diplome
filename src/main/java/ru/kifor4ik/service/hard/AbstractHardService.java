@@ -13,10 +13,6 @@ public class AbstractHardService <T extends CrudRepository<E>, E extends BaseEnt
         this.repository = repository;
     }
 
-    protected boolean validateQuery(String query) throws Exception {
-        query = query.replace("'","\'");
-        query = query.replace("--","");
 
-        return true;
-    }
+
 }

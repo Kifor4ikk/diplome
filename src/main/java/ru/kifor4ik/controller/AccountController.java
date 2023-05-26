@@ -8,7 +8,7 @@ import ru.kifor4ik.service.AccountService;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/low/account/")
+@RequestMapping("/api/account/")
 public class AccountController {
 
     @Autowired

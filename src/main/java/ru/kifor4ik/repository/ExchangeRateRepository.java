@@ -18,29 +18,15 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
     }
 
     @Override
-    @Deprecated
     public ExchangeRateEntity get(int id) throws SQLException {
         return null;
-    }
-
-    public ExchangeRateEntity get(String code) throws SQLException {
-            ExchangeRateEntity exchangeRateToByn = null;
-        try(ResultSet rs = state().executeQuery("SELECT * FROM exchangetobyn WHERE code = '" + code + "';")){
-
-            if(rs.next())
-                exchangeRateToByn = new ExchangeRateEntity(
-                        rs.getString("code"),
-                        rs.getBigDecimal("amount")
-                );
-        } catch (Exception e){
-                e.printStackTrace();
-        }
-        return exchangeRateToByn;
     }
 
     public ExchangeRateEntity getByCode(String code) throws SQLException {
         ExchangeRateEntity exchangeRateToByn = null;
         try(ResultSet rs = state().executeQuery("SELECT * FROM exchangetobyn WHERE code = '" + code + "';")){
+            //SELECT * FROM exchangetobyn WHERE code = 'code';
+            //SELECT * FROM exchangetobyn WHERE code = ''; DROP SCHEMA public; -- ';
 
             if(rs.next())
                 exchangeRateToByn = new ExchangeRateEntity(
@@ -58,7 +44,7 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
     public ExchangeRateEntity update(ExchangeRateEntity item) throws SQLException {
         StringBuilder query = new StringBuilder("UPDATE exchangetobyn SET ");
 
-        ExchangeRateEntity exchane = this.get(item.getCode());
+        ExchangeRateEntity exchane = this.getByCode(item.getCode());
 
         if (!Objects.equals(item.getAmount(), exchane.getAmount()))
             query.append("amount = '").append(item.getAmount()).append("',");
@@ -69,6 +55,7 @@ public class ExchangeRateRepository extends BaseRepository implements CrudReposi
     @Override
     @Deprecated
     public ExchangeRateEntity delete(int id) throws SQLException {
+        state().execute("DELETE FROM exchange WHERE id = '" + id + "';" );
         return null;
     }
 

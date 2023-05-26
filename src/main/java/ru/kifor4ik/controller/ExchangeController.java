@@ -8,7 +8,7 @@ import ru.kifor4ik.service.ExchangeRateService;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/low/exchange/")
+@RequestMapping("/api/exchange/")
 public class ExchangeController {
 
     @Autowired
@@ -19,9 +19,9 @@ public class ExchangeController {
         return exchangeRateService.create(item);
     }
 
-    @GetMapping("/{id}")
-    public ExchangeRateEntity get(@PathVariable(value = "id") int id) throws SQLException {
-        return exchangeRateService.getById(id);
+    @GetMapping("/{code}")
+    public ExchangeRateEntity get(@PathVariable(value = "code") String code) throws SQLException {
+        return exchangeRateService.getByCode(code);
     }
 
     @PutMapping("/")
