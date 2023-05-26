@@ -1,22 +1,23 @@
-package ru.kifor4ik.controller.low;
-
+package ru.kifor4ik.controller.medium;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.service.low.AbonentServiceLow;
+import ru.kifor4ik.service.medium.AbonentServiceMedium;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/low/abonent/")
-public class AbonentController {
+@RequestMapping("/api/medium/abonent/")
+public class AbonentControllerMedium {
+
     @Autowired
-    private AbonentServiceLow abonentService;
+    private AbonentServiceMedium abonentService;
 
     @PostMapping("/")
-    public AbonentEntity create(@RequestBody AbonentEntity abonentEntity) throws SQLException {
+    public AbonentEntity create(@RequestBody AbonentEntity abonentEntity) throws Exception {
         return (AbonentEntity) abonentService.create(abonentEntity);
     }
 
@@ -26,7 +27,7 @@ public class AbonentController {
     }
 
     @PutMapping("/")
-    public AbonentEntity update(@RequestBody AbonentEntity abonentEntity) throws SQLException {
+    public AbonentEntity update(@RequestBody AbonentEntity abonentEntity) throws Exception {
         return (AbonentEntity) abonentService.update(abonentEntity);
     }
 
@@ -35,7 +36,7 @@ public class AbonentController {
         return (AbonentEntity) abonentService.delete(id);
     }
 
-    @GetMapping("/transfer")
+    @PostMapping("/transfer")
     public boolean transferMoney(@RequestParam String cardNumberSender, @RequestParam int cardPassword,
                                  @RequestParam String cardNumberReceiver, @RequestParam BigDecimal amount) throws Exception {
         return abonentService.transferMoney(cardNumberSender, cardPassword, cardNumberReceiver,amount);

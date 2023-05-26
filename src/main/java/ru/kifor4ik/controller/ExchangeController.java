@@ -1,9 +1,9 @@
-package ru.kifor4ik.controller.low;
+package ru.kifor4ik.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.kifor4ik.domain.ExchangeRateEntity;
-import ru.kifor4ik.service.low.ExchangeRateServiceLow;
+import ru.kifor4ik.service.ExchangeRateService;
 
 import java.sql.SQLException;
 
@@ -12,10 +12,10 @@ import java.sql.SQLException;
 public class ExchangeController {
 
     @Autowired
-    private ExchangeRateServiceLow exchangeRateService;
+    private ExchangeRateService exchangeRateService;
 
     @PostMapping("/")
-    public ExchangeRateEntity create(@RequestBody ExchangeRateEntity item) throws SQLException {
+    public ExchangeRateEntity create(@RequestBody ExchangeRateEntity item) throws Exception {
         return exchangeRateService.create(item);
     }
 
@@ -25,7 +25,7 @@ public class ExchangeController {
     }
 
     @PutMapping("/")
-    public ExchangeRateEntity update(@RequestBody ExchangeRateEntity item) throws SQLException {
+    public ExchangeRateEntity update(@RequestBody ExchangeRateEntity item) throws Exception {
         return exchangeRateService.update(item);
     }
 

@@ -16,8 +16,7 @@ public class TransferRepository extends BaseRepository implements CrudRepository
         TransferEntity transferEntity = null;
         try (ResultSet rs = state().executeQuery("INSERT INTO transfer (sender,receiver,sender_currency_code," +
                 "receiver_currency_code,amount)\n" +
-                "VALUES (' " +
-                "', '" + item.getSender_account_id() +
+                "VALUES ('"+ item.getSender_account_id() +
                 "', '" + item.getReceiver_account_id() +
                 "', '" + item.getSender_currency_code() +
                 "', '" + item.getReceiver_currency_code() +

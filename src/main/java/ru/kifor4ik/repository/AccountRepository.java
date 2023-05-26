@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kifor4ik.domain.AbonentEntity;
 import ru.kifor4ik.domain.AccountEntity;
+import ru.kifor4ik.domain.TransferEntity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,6 +20,9 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
 
     @Autowired
     private ExchangeRateRepository exchangeRate;
+
+    @Autowired
+    private TransferRepository transferRepository;
     public AccountRepository() throws SQLException {
     }
 
@@ -116,27 +120,28 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
         return null;
     }
 
-    public boolean transferMoney(int accountIdSender, int accountIdReceiver, BigDecimal count) throws Exception {
+    public boolean transferMoney(int accountIdSender, int accountIdReceiver, BigDecimal amount) throws Exception {
 
         AccountEntity sender = get(accountIdSender);
         AccountEntity receiver = get(accountIdReceiver);
 
-        if(sender.getValue().compareTo(count) < 0)
+        if(sender.getValue().compareTo(amount) < 0)
             throw new Exception("Not enough money");
 
         else {
 
-
-            BigDecimal bynSender = exchangeRate.get(sender.getCurrencyCode()).getAmount().multiply(count);
-
+            BigDecimal bynSender = exchangeRate.get(sender.getCurrencyCode()).getAmount().multiply(amount);
             BigDecimal bynReceiver = bynSender.divide(exchangeRate.get(receiver.getCurrencyCode()).getAmount(), RoundingMode.DOWN);
 
-
-            sender.setValue(sender.getValue().subtract(count));
+            sender.setValue(sender.getValue().subtract(amount));
             receiver.setValue(receiver.getValue().add(bynReceiver));
             update(sender);
             update(receiver);
+
+            transferRepository.create(new TransferEntity(1, sender.getId(), receiver.getId(),
+                    sender.getCurrencyCode(), receiver.getCurrencyCode(), amount));
         }
+
         return true;
     }
 

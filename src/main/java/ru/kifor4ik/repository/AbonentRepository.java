@@ -56,7 +56,7 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
 
         try (ResultSet rs = state().executeQuery("SELECT * FROM abonent WHERE id = " + id + ";")) {
             //Info about abonent
-            if (rs.next())
+            if (rs.next()) {
                 abonentEntity = new AbonentEntity(
                         rs.getInt("id"),
                         rs.getString("login"),
@@ -69,8 +69,10 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                         rs.getString("note")
                 );
 
-            abonentEntity.setAccounts(accountRepository.getByAbonentId(abonentEntity.getId()));
-            abonentEntity.setCards(cardRepository.getByAbonentId(abonentEntity.getId()));
+                abonentEntity.setAccounts(accountRepository.getByAbonentId(abonentEntity.getId()));
+                abonentEntity.setCards(cardRepository.getByAbonentId(abonentEntity.getId()));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -25,8 +25,6 @@ public class AbonentServiceLow extends AbstractLowService<AbonentRepository, Abo
         this.cardRepository = cardRepository;
     }
 
-
-
     public boolean transferMoney(String cardSender, int password, String cardReceiver, BigDecimal amount) throws Exception {
         return accountRepository.transferMoney(
                 cardRepository.getByNumberAndPass(cardSender, password).getAccountId(),

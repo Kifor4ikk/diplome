@@ -16,7 +16,7 @@ public abstract class AbstractLowService<T extends CrudRepository<E>, E extends 
     }
 
     @Override
-    public E create(E item) throws SQLException {
+    public E create(E item) throws Exception {
         return repository.create(item);
     }
 
@@ -26,7 +26,7 @@ public abstract class AbstractLowService<T extends CrudRepository<E>, E extends 
     }
 
     @Override
-    public E update(E item) throws SQLException {
+    public E update(E item) throws Exception {
         return repository.update( item);
     }
 

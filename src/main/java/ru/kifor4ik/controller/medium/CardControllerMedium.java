@@ -1,38 +1,37 @@
-package ru.kifor4ik.controller.low;
+package ru.kifor4ik.controller.medium;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.kifor4ik.domain.AccountEntity;
 import ru.kifor4ik.domain.CardEntity;
 import ru.kifor4ik.service.low.CardServiceLow;
+import ru.kifor4ik.service.medium.CardServiceMedium;
 
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api/low/card/")
-public class CardController {
+@RequestMapping("/api/medium/card/")
+public class CardControllerMedium {
 
     @Autowired
-    private CardServiceLow cardServiceLow;
+    private CardServiceMedium cardService;
 
     @PostMapping("/")
-    public CardEntity create(@RequestBody CardEntity item) throws SQLException {
-        return cardServiceLow.create(item);
+    public CardEntity create(@RequestBody CardEntity item) throws Exception {
+        return cardService.create(item);
     }
 
     @GetMapping("/{id}")
     public CardEntity get(@PathVariable(value = "id") int id) throws SQLException {
-        return cardServiceLow.getById(id);
+        return cardService.getById(id);
     }
 
     @PutMapping("/")
-    public CardEntity update(@RequestBody CardEntity item) throws SQLException {
-        return cardServiceLow.update(item);
+    public CardEntity update(@RequestBody CardEntity item) throws Exception {
+        return cardService.update(item);
     }
 
     @DeleteMapping("/")
     public CardEntity delete(@RequestParam int id) throws SQLException {
-        return cardServiceLow.delete(id);
+        return cardService.delete(id);
     }
-
 }
