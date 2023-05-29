@@ -136,7 +136,9 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
         query.append("WHERE ID = ").append(item.getId()).append(";");
 
         System.out.println(query);
-        state().executeUpdate(String.valueOf(query));
+        if(!query.toString().contains("UPDATE abonent SET WHERE ID = ") )
+            state().executeUpdate(String.valueOf(query));
+
         return abonentEntity;
     }
 
