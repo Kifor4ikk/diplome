@@ -22,7 +22,7 @@ public class AbonentControllerMedium {
     }
 
     @GetMapping("/{id}")
-    public AbonentEntity get(@PathVariable(value = "id") int id) throws SQLException {
+    public AbonentEntity get(@PathVariable(value = "id") int id) throws Exception {
         return (AbonentEntity) abonentService.getById(id);
     }
 

@@ -8,7 +8,7 @@ public class DataBaseConnection {
 
 
     private static final String jdbcUrl = "jdbc:postgresql://localhost:5432/diplome";
-    private static final String username = "admin";
+    private static final String username = "postgres";
     private static final String password = "1";
 
 

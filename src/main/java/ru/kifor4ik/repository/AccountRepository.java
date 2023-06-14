@@ -25,8 +25,6 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
     private TransferRepository transferRepository;
     public AccountRepository() throws SQLException {
     }
-
-
     @Override
     public AccountEntity create(AccountEntity item) throws SQLException {
         AccountEntity accountEntity = null;
@@ -40,9 +38,6 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
         return accountEntity;
     }
 
@@ -60,10 +55,11 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
                         rs.getString("currency_code")
                 );
 
-        } catch (SQLException e) {
+
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return accountEntity;
     }
 
@@ -85,14 +81,12 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return accountEntity;
     }
 
     @Override
     public AccountEntity update(AccountEntity item) throws SQLException {
         StringBuilder query = new StringBuilder("UPDATE account SET ");
-
         AccountEntity accountEntity = this.get(item.getId());
 
         if (!item.getCurrencyCode().isBlank() && !Objects.equals(accountEntity.getCurrencyCode(), item.getCurrencyCode()))
@@ -107,10 +101,8 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
             query.setCharAt(query.length() - 1, ' ');
 
         query.append("WHERE ID = ").append(item.getId()).append(";");
-
         System.out.println(query);
         state().executeUpdate(String.valueOf(query));
-
         return accountEntity;
     }
 
@@ -129,20 +121,15 @@ public class AccountRepository extends BaseRepository implements CrudRepository<
             throw new Exception("Not enough money");
 
         else {
-
             BigDecimal bynSender = exchangeRate.getByCode(sender.getCurrencyCode()).getAmount().multiply(amount);
             BigDecimal bynReceiver = bynSender.divide(exchangeRate.getByCode(receiver.getCurrencyCode()).getAmount(), RoundingMode.DOWN);
-
             sender.setValue(sender.getValue().subtract(amount));
             receiver.setValue(receiver.getValue().add(bynReceiver));
             update(sender);
             update(receiver);
-
             transferRepository.create(new TransferEntity(1, sender.getId(), receiver.getId(),
                     sender.getCurrencyCode(), receiver.getCurrencyCode(), amount));
         }
-
         return true;
     }
-
 }

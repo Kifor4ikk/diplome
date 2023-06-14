@@ -21,7 +21,7 @@ public class CardControllerHard {
     }
 
     @GetMapping("/{id}")
-    public CardEntity get(@PathVariable(value = "id") int id) throws SQLException {
+    public CardEntity get(@PathVariable(value = "id") int id) throws Exception {
         return cardService.getById(id);
     }
 

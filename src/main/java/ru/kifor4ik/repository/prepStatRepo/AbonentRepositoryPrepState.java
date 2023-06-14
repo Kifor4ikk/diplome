@@ -26,7 +26,6 @@ public class AbonentRepositoryPrepState extends BaseRepository implements CrudRe
 
     @Override
     public AbonentEntity create(AbonentEntity item) throws SQLException {
-
         try (PreparedStatement preparedStatement = state().getConnection().prepareStatement("INSERT INTO abonent (" +
                         "login," +
                         "\"password\"," +
@@ -38,7 +37,6 @@ public class AbonentRepositoryPrepState extends BaseRepository implements CrudRe
                         "note)\n" +
                         "VALUES (?,?,?,?,?,?,?,?)" +
                         "RETURNING ID;")) {
-
             preparedStatement.setString(1, item.getLogin());
             preparedStatement.setString(2, item.getPassword());
             preparedStatement.setString(3, item.getFirstName());
@@ -52,7 +50,6 @@ public class AbonentRepositoryPrepState extends BaseRepository implements CrudRe
             int id = 0;
             if (rs.next())
                 id = rs.getInt("id");
-
             return get(id);
         }
     }

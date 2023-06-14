@@ -20,7 +20,7 @@ public class CardControllerLow {
     }
 
     @GetMapping("/{id}")
-    public CardEntity get(@PathVariable(value = "id") int id) throws SQLException {
+    public CardEntity get(@PathVariable(value = "id") int id) throws Exception {
         return cardServiceLow.getById(id);
     }
 

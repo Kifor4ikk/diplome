@@ -20,7 +20,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public AccountEntity get(@PathVariable(value = "id") int id) throws SQLException {
+    public AccountEntity get(@PathVariable(value = "id") int id) throws Exception {
         return accountService.getById(id);
     }
 

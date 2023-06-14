@@ -21,7 +21,7 @@ public abstract class AbstractLowService<T extends CrudRepository<E>, E extends 
     }
 
     @Override
-    public E getById(int id) throws SQLException {
+    public E getById(int id) throws Exception {
         return repository.get(id);
     }
 

@@ -28,13 +28,12 @@ public class AbonentServiceMedium extends AbstractMediumService<AbonentRepositor
 
     @Override
     public AbonentEntity create(AbonentEntity item) throws Exception {
+
         validateQuery(item.getLogin());
         validateQuery(item.getPassword());
-
         validateQuery(item.getFirstName());
         validateQuery(item.getSecondName());
         validateQuery(item.getThirdName());
-
         validateQuery(item.getPhoneNumber());
         validateQuery(item.getNote());
 
@@ -42,7 +41,7 @@ public class AbonentServiceMedium extends AbstractMediumService<AbonentRepositor
     }
 
     @Override
-    public AbonentEntity getById(int id) throws SQLException {
+    public AbonentEntity getById(int id) throws Exception {
         return super.getById(id);
     }
 

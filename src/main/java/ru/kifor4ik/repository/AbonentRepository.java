@@ -20,9 +20,8 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
     private CardRepository cardRepository = new CardRepository();
 
     @Override
-    public AbonentEntity create(AbonentEntity item) throws SQLException {
+    public AbonentEntity create(AbonentEntity item) throws Exception {
 
-        System.out.println("->" + item.toString());
         AbonentEntity abonentEntity = null;
         try (ResultSet rs = state().executeQuery("INSERT INTO abonent (" +
                 "login," +
@@ -47,12 +46,13 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                 abonentEntity = this.get(rs.getInt("id"));
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
         return abonentEntity;
     }
 
     @Override
-    public AbonentEntity get(int id) throws SQLException {
+    public AbonentEntity get(int id) throws Exception {
         AbonentEntity abonentEntity = null;
 
         try (ResultSet rs = state().executeQuery("SELECT * FROM abonent WHERE id = " + id + ";")) {
@@ -69,13 +69,16 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
                         rs.getString("phonenumber"),
                         rs.getString("note")
                 );
-
                 abonentEntity.setAccounts(accountRepository.getByAbonentId(abonentEntity.getId()));
                 abonentEntity.setCards(cardRepository.getByAbonentId(abonentEntity.getId()));
             }
 
+            if(abonentEntity == null)
+                throw new Exception("Abonent with id " + id + " was not foundedd");
+
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
 
 
@@ -110,7 +113,7 @@ public class AbonentRepository extends BaseRepository implements CrudRepository<
     }
 
     @Override
-    public AbonentEntity update(AbonentEntity item) throws SQLException {
+    public AbonentEntity update(AbonentEntity item) throws Exception {
 
         StringBuilder query = new StringBuilder("UPDATE abonent SET ");
 
